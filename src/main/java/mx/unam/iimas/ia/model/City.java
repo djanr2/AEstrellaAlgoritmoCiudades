@@ -1,27 +1,24 @@
 package mx.unam.iimas.ia.model;
 
+
 import java.util.HashMap;
+
 import java.util.Map;
 
 public class City {
     private int id;
-    private City parent;
     private Map<City, Integer> frontier;
     private CityProperty property;
+    private Map<City, City> explored;
 
     public City(CityProperty property){
         this.property = property;
         frontier = new HashMap<>();
+        explored = new HashMap<>();
     }
 
-    public boolean addBorderCity(City city, Integer weight){
-        //TODO ADD A WAY TO CHECK IF A CITY ALREADY WAS INSERTED
-        if (frontier.get(city)!=null){
-            return false;
-        }
-
+    public void addBorderCity(City city, Integer weight){
         frontier.put(city,weight);
-        return true;
     }
 
     public int getId() {
@@ -30,14 +27,6 @@ public class City {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public City getParent() {
-        return parent;
-    }
-
-    public void setParent(City parent) {
-        this.parent = parent;
     }
 
     public Map<City, Integer> getFrontier() {
@@ -52,7 +41,18 @@ public class City {
         return this.property.name();
     }
 
+    public CityProperty getProperty() {
+        return property;
+    }
     public int getOptimizationFunction(int weight){
         return weight+this.getHeuristic();
     }
+
+    public Map<City, City> getExplored() {
+        return explored;
+    }
+    public void setExplored(City explored) {
+        this.explored.put(explored, explored);
+    }
+
 }
